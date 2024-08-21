@@ -2,6 +2,7 @@ package com.ust.inventoryservice.controller;
 
 import com.ust.inventoryservice.domain.Product;
 import com.ust.inventoryservice.payload.ResponseDto;
+import com.ust.inventoryservice.payload.UpResponseDto;
 import com.ust.inventoryservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,16 @@ public class ProductController {
 
     // GET /products/{skuCode}
     @GetMapping("/{skuCode}")
-    public ResponseEntity<Product> getProductQuantity(@PathVariable String skuCode) {
+    public ResponseEntity<Product> getProduct(@PathVariable String skuCode) {
         var response = productService.getProductBySkuCode(skuCode).orElseThrow();
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<UpResponseDto> updateProduct(@RequestParam String skuCode, @RequestParam int quantity) {
+        productService.updateProductQuantity(skuCode, quantity);
+        UpResponseDto dto = new UpResponseDto(skuCode, quantity, productService.getProductBySkuCode(skuCode).get().getPrice());
+        return ResponseEntity.ok().body(dto);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ust.doscoveryservice;
+package com.ust.discoveryservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
