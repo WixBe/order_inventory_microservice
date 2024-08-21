@@ -34,4 +34,10 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/{skuCode}/{quantity}/update")
+    public ResponseEntity<Product> updateProductQuantity(@PathVariable String skuCode, @PathVariable int quantity) {
+        productService.updateProductQuantity(skuCode, quantity);
+        return ResponseEntity.ok().build();
+    }
+
 }
