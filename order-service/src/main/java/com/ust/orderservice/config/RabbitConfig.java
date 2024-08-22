@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    static final String topicExchangeName = "inventory-order-exchange";
-    static final String queueName = "order-queue";
+    public static final String TOPIC_EXCHANGE_NAME = "inventory-order-exchange";
+    public static final String queueName = "order-queue";
 
     @Bean
     Queue queue() {
@@ -20,7 +20,7 @@ public class RabbitConfig {
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
+        return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean

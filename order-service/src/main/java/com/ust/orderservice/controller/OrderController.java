@@ -1,5 +1,6 @@
 package com.ust.orderservice.controller;
 
+import com.ust.orderservice.config.RabbitConfig;
 import com.ust.orderservice.domain.Order;
 import com.ust.orderservice.domain.OrderItem;
 import com.ust.orderservice.domain.OrderStatus;
@@ -33,7 +34,7 @@ public class OrderController {
             return item;
         }).collect(Collectors.toList()));
 
-        messageService.sendMessage("inventory-order-exchange", "order.created", orderRequest);
+        messageService.sendMessage(RabbitConfig.TOPIC_EXCHANGE_NAME, "order.created", orderRequest);
         return ResponseEntity.ok(orderService.createOrder(order));
     }
 
