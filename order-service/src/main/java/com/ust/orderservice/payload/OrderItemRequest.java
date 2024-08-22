@@ -1,7 +1,11 @@
 package com.ust.orderservice.payload;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+
 public record OrderItemRequest(
-        String skuCode,
-        Integer quantity
-) {
+        @JsonProperty("skuCode") String skuCode,
+        @JsonProperty("quantity") Integer quantity
+) implements Serializable {
 }

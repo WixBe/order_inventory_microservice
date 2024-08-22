@@ -15,6 +15,11 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @PostMapping
+    public ResponseEntity<?> receiveOrderItems(){
+        return ResponseEntity.ok().build();
+    }
+
     // GET /products?skuCode=P01&quantity=2
     @GetMapping
     public ResponseEntity<ResponseDto> isProductAvailable(@RequestParam String skuCode, @RequestParam int quantity) {

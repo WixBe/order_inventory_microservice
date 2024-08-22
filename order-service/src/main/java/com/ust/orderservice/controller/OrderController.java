@@ -4,6 +4,7 @@ import com.ust.orderservice.domain.Order;
 import com.ust.orderservice.domain.OrderItem;
 import com.ust.orderservice.domain.OrderStatus;
 import com.ust.orderservice.payload.OrderRequest;
+import com.ust.orderservice.service.MessageService;
 import com.ust.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private final OrderService orderService;
+    private final MessageService messageService;
 
     // POST /orders create order
     @PostMapping
@@ -30,6 +32,8 @@ public class OrderController {
             item.setOrder(order);
             return item;
         }).collect(Collectors.toList()));
+
+        messageService.sendMessage("inventory-order-exchange", "order.created", orderRequest);
         return ResponseEntity.ok(orderService.createOrder(order));
     }
 
