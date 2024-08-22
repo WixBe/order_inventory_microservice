@@ -25,6 +25,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
         Order order = new Order();
+
         order.setStatus(OrderStatus.CREATED);
         order.setOrderItems(orderRequest.orderItems().stream().map(orderItem -> {
             OrderItem item = new OrderItem();
@@ -34,8 +35,14 @@ public class OrderController {
             return item;
         }).collect(Collectors.toList()));
 
-        messageService.sendMessage(RabbitConfig.TOPIC_EXCHANGE_NAME, "order.created", orderRequest);
-        return ResponseEntity.ok(orderService.createOrder(order));
+        var createdOrder = orderService.createOrder(order);
+
+        messageService.sendMessage(
+                RabbitConfig.TOPIC_EXCHANGE_NAME,
+                "order.created",
+                new OrderRequest(order.getId(), orderRequest.orderItems())
+        );
+        return ResponseEntity.ok(createdOrder);
     }
 
     // GET /orders/{id} get order by id

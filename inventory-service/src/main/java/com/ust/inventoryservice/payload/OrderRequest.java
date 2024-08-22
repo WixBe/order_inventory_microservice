@@ -1,4 +1,4 @@
-package com.ust.orderservice.payload;
+package com.ust.inventoryservice.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,6 +7,5 @@ import java.util.List;
 
 public record OrderRequest(
         @JsonProperty("OrderId") Long orderId,
-        @JsonProperty("orderItems") List<OrderItemRequest> orderItems) implements Serializable {
+        @JsonProperty("orderItems") List<OrderItemRequest> orderItems) implements Serializable {}
 
-}
