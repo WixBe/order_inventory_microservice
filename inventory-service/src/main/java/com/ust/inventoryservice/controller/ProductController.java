@@ -23,7 +23,7 @@ public class ProductController {
     // GET /products?skuCode=P01&quantity=2
     @GetMapping
     public ResponseEntity<ResponseDto> isProductAvailable(@RequestParam String skuCode, @RequestParam int quantity) {
-        var status =  productService.isProductAvailable(skuCode, quantity);
+        var status =  productService.isProductAvailableWithReqQuantity(skuCode, quantity);
         var response = new ResponseDto(skuCode, status, status ? HttpStatus.OK: HttpStatus.BAD_REQUEST);
         if (status) {
             return ResponseEntity.ok(response);

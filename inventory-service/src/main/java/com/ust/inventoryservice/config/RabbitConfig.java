@@ -29,19 +29,24 @@ public class RabbitConfig {
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("order.#");
+        return BindingBuilder.bind(queue).to(exchange).with("order.created.#");
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
+        rabbitTemplate.setMessageConverter(receiverJackson2MessageConverter());
         return rabbitTemplate;
     }
 
     @Bean
-    public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
+    public Jackson2JsonMessageConverter receiverJackson2MessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
+    // Add the RabbitMQ error handler bean here
+//    public RabbitMQErrorHandler rabbitMQErrorHandler() {
+//        return new RabbitMQErrorHandler();
+//    }
 
 }
